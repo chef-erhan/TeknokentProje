@@ -132,7 +132,7 @@
         txtMessage.value = "";
         // Send message to the Unity scene
         // Params: "Target object in the scene", "Function name", "Parameters"
-        unityInstance.SendMessage("[Bridge]", "ReceiveMessageFromPage", message);
+        unityInstance.SendMessage("Bridge", "ReceiveMessageFromPage", message);
       }
     </script>
   </body>
