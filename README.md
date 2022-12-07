@@ -1,1 +1,1 @@
-# TeknokentProje
+# Teknokent Proje
