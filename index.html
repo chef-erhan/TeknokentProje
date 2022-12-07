@@ -112,6 +112,20 @@
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
+
+          // Function which sends the message to Unity
+          function sendMessageToUnity() {
+            // Get the input field
+            const txtMessage = document.getElementById("txtMessage");
+            // Get the message
+            const message = txtMessage.value;
+            // Clear the input field
+            txtMessage.value = "";
+            // Send message to the Unity scene
+            // Params: "Target object in the scene", "Function name", "Parameters"
+            unityInstance.SendMessage("Bridge", "ReceiveMessageFromPage", message);
+          }
+          
           loadingBar.style.display = "none";
           fullscreenButton.onclick = () => {
             unityInstance.SetFullscreen(1);
@@ -122,18 +136,7 @@
       };
       document.body.appendChild(script);
 
-      // Function which sends the message to Unity
-      function sendMessageToUnity() {
-        // Get the input field
-        const txtMessage = document.getElementById("txtMessage");
-        // Get the message
-        const message = txtMessage.value;
-        // Clear the input field
-        txtMessage.value = "";
-        // Send message to the Unity scene
-        // Params: "Target object in the scene", "Function name", "Parameters"
-        unityInstance.SendMessage("Bridge", "ReceiveMessageFromPage", message);
-      }
+      
     </script>
   </body>
 </html>
