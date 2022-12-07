@@ -37,6 +37,9 @@
       var progressBarFull = document.querySelector("#unity-progress-bar-full");
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var warningBanner = document.querySelector("#unity-warning");
+      
+     // var unityInstance = UnityLoader.instantiate("unity-container", "Build/WebGL/Test_WebGL.json", {onProgress: UnityProgress});
+      var myUnity;
 
       // Shows a temporary message banner/ribbon for a few seconds, or
       // a permanent error message on top of the canvas if type=='error'.
@@ -112,20 +115,7 @@
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
-
-          // Function which sends the message to Unity
-          function sendMessageToUnity() {
-            // Get the input field
-            const txtMessage = document.getElementById("txtMessage");
-            // Get the message
-            const message = txtMessage.value;
-            // Clear the input field
-            txtMessage.value = "";
-            // Send message to the Unity scene
-            // Params: "Target object in the scene", "Function name", "Parameters"
-            unityInstance.SendMessage("Bridge", "ReceiveMessageFromPage", message);
-          }
-          
+          myUnity = unityInstance;
           loadingBar.style.display = "none";
           fullscreenButton.onclick = () => {
             unityInstance.SetFullscreen(1);
@@ -136,7 +126,18 @@
       };
       document.body.appendChild(script);
 
-      
+      // Function which sends the message to Unity
+      function sendMessageToUnity() {
+        // Get the input field
+        const txtMessage = document.getElementById("txtMessage");
+        // Get the message
+        const message = txtMessage.value;
+        // Clear the input field
+        txtMessage.value = "";
+        // Send message to the Unity scene
+        // Params: "Target object in the scene", "Function name", "Parameters"
+        myUnity.SendMessage("Bridge", "ReceiveMessageFromPage", message);
+      }
     </script>
   </body>
 </html>
